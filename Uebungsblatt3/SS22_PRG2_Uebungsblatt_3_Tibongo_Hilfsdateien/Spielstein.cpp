@@ -582,6 +582,21 @@ void Spielstein::init() {
 	{
 		name = "LOESUNG";
 		farbe = HINTERGRUND_HELL_WEISS;
+		felder[0][0].push_back(Position(0, 0));//##_
+		felder[0][0].push_back(Position(0, 1));//####
+		felder[0][0].push_back(Position(0, 1));//####
+		felder[0][0].push_back(Position(1, 1));//_###
+		felder[0][0].push_back(Position(2, 1));
+		felder[0][0].push_back(Position(3, 1));
+		felder[0][0].push_back(Position(0, 2));
+		felder[0][0].push_back(Position(1, 2));
+		felder[0][0].push_back(Position(2, 2));
+		felder[0][0].push_back(Position(3, 2));
+		felder[0][0].push_back(Position(1, 3));
+		felder[0][0].push_back(Position(2, 3));
+		felder[0][0].push_back(Position(3, 3));
+		
+
 		break;
 	}
 	default:
@@ -591,29 +606,14 @@ void Spielstein::init() {
 void Spielstein::zeichne()
 {
 	Cursor::setze_Farbe(farbe);
-	int offset_x = this->position.getX();
-	int offset_y = this->position.getY();
+	int offset_x = position.getX();
+	int offset_y = position.getY();
 	
-			if (felder[seite][orientierung].size() == 2) {
-				for (int j = 0; j < 3; j++) {
-					Console::zeichne_punkt(felder[seite][orientierung][j].getX() + offset_x, felder[seite][orientierung][j].getY() + offset_y, ' ');
-				}
-			}
-			else if (felder[seite][orientierung].size() == 3) {
-				for (int j = 0; j < 3; j++) {
-					Console::zeichne_punkt(felder[seite][orientierung][j].getX() + offset_x, felder[seite][orientierung][j].getY() + offset_y, ' ');
-				}
-			}
-			else if (felder[seite][orientierung].size() == 4) {
-				for (int j = 0; j < 4; j++) {
-					Console::zeichne_punkt(felder[seite][orientierung][j].getX() + offset_x, felder[seite][orientierung][j].getY() + offset_y, ' ');
-				}
-			}
-			else if (felder[seite][orientierung].size() == 5) {
-				for (int j = 0; j < 5; j++) {
-					Console::zeichne_punkt(felder[seite][orientierung][j].getX() + offset_x, felder[seite][orientierung][j].getY() + offset_y, ' ');
-				}
-			}
+		
+	
+      for (unsigned int j = 0; j < felder[seite][orientierung].size(); j++) {
+	 Console::zeichne_punkt(felder[seite][orientierung][j].getX() + offset_x , felder[seite][orientierung][j].getY() + offset_y , ' ');
+		}
 			
 	
 }
@@ -622,7 +622,7 @@ void Spielstein::loesche()
 	Cursor::setze_Farbe(HINTERGRUND_SCHWARZ);
 	int offset_x = this->position.getX();
 	int offset_y = this->position.getY();
-	if (felder[seite][orientierung].size() == 2) {
+	/*if (felder[seite][orientierung].size() == 2) {
 		for (int j = 0; j < 2; j++) {
 			Console::zeichne_punkt(felder[seite][orientierung][j].getX() + offset_x, felder[seite][orientierung][j].getY() + offset_y, ' ');
 		}
@@ -641,7 +641,11 @@ void Spielstein::loesche()
 		for (int j = 0; j < 5; j++) {
 			Console::zeichne_punkt(felder[seite][orientierung][j].getX() + offset_x, felder[seite][orientierung][j].getY() + offset_y, ' ');
 		}
+	}*/
+	for (unsigned int j = 0; j < felder[seite][orientierung].size(); j++) {
+		Console::zeichne_punkt(felder[seite][orientierung][j].getX() + offset_x, felder[seite][orientierung][j].getY() + offset_y, ' ');
 	}
+
 }
 void Spielstein::bewegen(int richtung)
 {
@@ -651,7 +655,10 @@ void Spielstein::bewegen(int richtung)
 	//go up
 	if (richtung == CONFIGURATION::SPIELSTEIN_BEWEGEN_HOCH) {
 		
-			if (felder[seite][orientierung].size() == 2) {
+		for (unsigned int j = 0; j < felder[seite][orientierung].size(); j++) {
+			felder[seite][orientierung][j] = { Position(felder[seite][orientierung][j].getX() ,felder[seite][orientierung][j].getY() - 1) };
+		}
+			/*if (felder[seite][orientierung].size() == 2) {
 				for (int j = 0; j < 2; j++) {
 					felder[seite][orientierung][j] = { Position(felder[seite][orientierung][j].getX() ,felder[seite][orientierung][j].getY() - 1) };
 				}
@@ -670,32 +677,15 @@ void Spielstein::bewegen(int richtung)
 				for (int j = 0; j < 5; j++) {
 					felder[seite][orientierung][j] = { Position(felder[seite][orientierung][j].getX() ,felder[seite][orientierung][j].getY() - 1) };
 				}
-			}
+			}*/
 
 	}
 
 	//go down 
 	else if (richtung == CONFIGURATION::SPIELSTEIN_BEWEGEN_RUNTER) {
 
-		if (felder[seite][orientierung].size() == 2) {
-			for (int j = 0; j < 2; j++) {
-				felder[seite][orientierung][j] = { Position(felder[seite][orientierung][j].getX() ,felder[seite][orientierung][j].getY() + 1) };
-			}
-		}
-		else if (felder[seite][orientierung].size() == 3) {
-			for (int j = 0; j < 3; j++) {
-				felder[seite][orientierung][j] = { Position(felder[seite][orientierung][j].getX() ,felder[seite][orientierung][j].getY() + 1) };
-			}
-		}
-		else if (felder[seite][orientierung].size() == 4) {
-			for (int j = 0; j < 4; j++) {
-				felder[seite][orientierung][j] = { Position(felder[seite][orientierung][j].getX() ,felder[seite][orientierung][j].getY() + 1) };
-			}
-		}
-		else if (felder[seite][orientierung].size() == 5) {
-			for (int j = 0; j < 5; j++) {
-				felder[seite][orientierung][j] = { Position(felder[seite][orientierung][j].getX() ,felder[seite][orientierung][j].getY() + 1) };
-			}
+		for (unsigned int j = 0; j < felder[seite][orientierung].size(); j++) {
+			felder[seite][orientierung][j] = { Position(felder[seite][orientierung][j].getX() ,felder[seite][orientierung][j].getY() + 1) };
 		}
 
 	}
@@ -703,51 +693,17 @@ void Spielstein::bewegen(int richtung)
 	//go right
 	else if (richtung == CONFIGURATION::SPIELSTEIN_BEWEGEN_RECHTS) {
 
-		if (felder[seite][orientierung].size() == 2) {
-			for (int j = 0; j < 2; j++) {
-				felder[seite][orientierung][j] = { Position(felder[seite][orientierung][j].getX() +1 ,felder[seite][orientierung][j].getY()) };
-			}
-		}
-		else if (felder[seite][orientierung].size() == 3) {
-			for (int j = 0; j < 3; j++) {
-				felder[seite][orientierung][j] = { Position(felder[seite][orientierung][j].getX() + 1 ,felder[seite][orientierung][j].getY() - 1) };
-			}
-		}
-		else if (felder[seite][orientierung].size() == 4) {
-			for (int j = 0; j < 4; j++) {
-				felder[seite][orientierung][j] = { Position(felder[seite][orientierung][j].getX() + 1 ,felder[seite][orientierung][j].getY() - 1) };
-			}
-		}
-		else if (felder[seite][orientierung].size() == 5) {
-			for (int j = 0; j < 5; j++) {
-				felder[seite][orientierung][j] = { Position(felder[seite][orientierung][j].getX() + 1 ,felder[seite][orientierung][j].getY() - 1) };
-			}
+		for (unsigned int j = 0; j < felder[seite][orientierung].size(); j++) {
+			felder[seite][orientierung][j] = { Position(felder[seite][orientierung][j].getX() +1 ,felder[seite][orientierung][j].getY()) };
 		}
 
 	}
 
 	//go left
-	else if (richtung == CONFIGURATION::SPIELSTEIN_BEWEGEN_RECHTS) {
+	else if (richtung == CONFIGURATION::SPIELSTEIN_BEWEGEN_LINKS) {
 
-		if (felder[seite][orientierung].size() == 2) {
-			for (int j = 0; j < 2; j++) {
-				felder[seite][orientierung][j] = { Position(felder[seite][orientierung][j].getX() - 1 ,felder[seite][orientierung][j].getY() - 1) };
-			}
-		}
-		else if (felder[seite][orientierung].size() == 3) {
-			for (int j = 0; j < 3; j++) {
-				felder[seite][orientierung][j] = { Position(felder[seite][orientierung][j].getX() - 1 ,felder[seite][orientierung][j].getY() - 1) };
-			}
-		}
-		else if (felder[seite][orientierung].size() == 4) {
-			for (int j = 0; j < 4; j++) {
-				felder[seite][orientierung][j] = { Position(felder[seite][orientierung][j].getX() - 1 ,felder[seite][orientierung][j].getY() - 1) };
-			}
-		}
-		else if (felder[seite][orientierung].size() == 5) {
-			for (int j = 0; j < 5; j++) {
-				felder[seite][orientierung][j] = { Position(felder[seite][orientierung][j].getX() - 1 ,felder[seite][orientierung][j].getY() - 1) };
-			}
+		for (unsigned int j = 0; j < felder[seite][orientierung].size(); j++) {
+			felder[seite][orientierung][j] = { Position(felder[seite][orientierung][j].getX() - 1 ,felder[seite][orientierung][j].getY()) };
 		}
 
 	}
@@ -784,7 +740,7 @@ void Spielstein::flip()
 	}
 }
 
-//Gibt den felder Vektor der aktuellen Lage des Spielsteins zurück.
+//Gibt den felder Vektor der aktuellen Lage des Spielsteins zurÃ¼ck.
 std::vector<Position>* Spielstein::getPositionen()
 {
 	this->seite = seite; 
@@ -793,15 +749,15 @@ std::vector<Position>* Spielstein::getPositionen()
 	return &this->felder[this->seite][this->orientierung];
 }
 
-//Durchläuft den felder Vektor des Spielsteins in aktueller Lage.
-//Gibt true zurück, falls die übergebene Position innerhalb des Spielsteines liegt.
-//Ansonsten wird false zurückgegeben.
+//DurchlÃ¤uft den felder Vektor des Spielsteins in aktueller Lage.
+//Gibt true zurÃ¼ck, falls die Ã¼bergebene Position innerhalb des Spielsteines liegt.
+//Ansonsten wird false zurÃ¼ckgegeben.
 bool Spielstein::innerhalb(Position pos) const
 {
 
 
-		for (unsigned int i = 0; i < this->felder[this->seite][this->orientierung].size(); i++) {
-			if (this->felder[seite][orientierung][i] == pos) {
+		for (unsigned int i = 0; i < felder[seite][orientierung].size(); i++) {
+			if (felder[seite][orientierung][i] == pos) {
 				return true;
 				break;
 			}
@@ -809,9 +765,6 @@ bool Spielstein::innerhalb(Position pos) const
 				return false; 
 			}
 		}
-	
-	
-	
 	/*else if (felder[seite][orientierung].size() == 3) {
 		for (int i = 0; i < 3; i++) {
 			if (this->felder[seite][orientierung][i] == pos)
@@ -836,12 +789,12 @@ bool Spielstein::innerhalb(Position pos) const
 	
 }
 
-//Gibt war zurück, falls sich der aufrufende und der übergebene Spielstein sich in mindestens einer Position überlappen.
+//Gibt war zurÃ¼ck, falls sich der aufrufende und der Ã¼bergebene Spielstein sich in mindestens einer Position Ã¼berlappen.
 bool Spielstein::ueberlapp(Spielstein& sp) 
 {
 		for (unsigned int i = 0; i < sp.felder[sp.seite][sp.orientierung].size(); i++) {
-			for (unsigned int j = 0; j < this->felder[this->seite][this->orientierung].size(); j++) {
-				if (sp.felder[sp.seite][sp.orientierung][i] == this->felder[this->seite][this->orientierung][j]) {
+			for (unsigned int j = 0; j < felder[seite][orientierung].size(); j++) {
+				if (sp.felder[sp.seite][sp.orientierung][i] == felder[seite][orientierung][j]) {
 					return true;
 					
 				}
@@ -849,25 +802,16 @@ bool Spielstein::ueberlapp(Spielstein& sp)
 					return false;
 					
 				}
-				
-
 			}
-		
 		}
-	   
-
-
-
-
-
 }
 
-//Addiert zwei Spielsteine in ihrer aktuellen Lage und gibt die Summe als neuen Spielstein zurück.
+//Addiert zwei Spielsteine in ihrer aktuellen Lage und gibt die Summe als neuen Spielstein zurÃ¼ck.
 Spielstein Spielstein::operator+ (const Spielstein& rhs) const
 {
 	Spielstein summe(SPIELSTEIN_FREI);
 
-	if (this->felder[this->seite][this->orientierung].size() == 2 || rhs.felder[rhs.seite][rhs.orientierung].size() == 2) {
+	/*if (this->felder[this->seite][this->orientierung].size() == 2 || rhs.felder[rhs.seite][rhs.orientierung].size() == 2) {
 		for (int i = 0; i < 2; i++) {
 			summe.felder[seite][orientierung].push_back(this->felder[this->seite][this->orientierung][i] + rhs.felder[seite][orientierung][i]);
 			return summe;
@@ -890,6 +834,13 @@ Spielstein Spielstein::operator+ (const Spielstein& rhs) const
 			summe.felder[seite][orientierung].push_back(this->felder[this->seite][this->orientierung][i] + rhs.felder[seite][orientierung][i]);
 			return summe;
 		}
+	}*/
+
+	for (unsigned int i = 0; i < this->felder[this->seite][this->orientierung].size(); i++) {
+
+		summe.felder[seite][orientierung].push_back(this->felder[this->seite][this->orientierung][i] + rhs.felder[seite][orientierung][i]);
+		return summe;
+
 	}
 	
 	
